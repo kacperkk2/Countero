@@ -16,7 +16,7 @@ class ProfileModel with ChangeNotifier {
         _profileLoaded = true;
         return planConfigString == null
             ? null
-            : null; //TODO return loaded profile
+            : Profile.fromJson(jsonDecode(planConfigString));
     }
 
     void deleteProfile() async {
