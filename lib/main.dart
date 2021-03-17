@@ -1,4 +1,4 @@
-import 'package:countero/pages/home.dart';
+import 'package:countero/routing.dart';
 import 'package:countero/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +11,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: getTheme(),
-      home: Home(),
+      initialRoute: MyRoute.HOME.route,
+      routes: getRoutes(),
     );
   }
 }
