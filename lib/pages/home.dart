@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:countero/models/profile_model.dart';
 import 'package:provider/provider.dart';
 
+import '../routing.dart';
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -74,7 +76,12 @@ class HomeEmpty extends StatelessWidget {
             ),
             SizedBox(height: 30,),
             RawMaterialButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(
+                    context,
+                    MyRoute.CREATE_PROFILE.route
+                );
+              },
               elevation: 2.0,
               fillColor: Theme.of(context).accentColor,
               textStyle: Theme.of(context).textTheme.headline1,

@@ -9,6 +9,13 @@ class ProfileModel with ChangeNotifier {
 
     Profile get profile => _profile;
     bool get profileLoaded => _profileLoaded;
+    
+    set profile(Profile profileToSet) {
+        profile = profileToSet;
+        _profileLoaded = true;
+        saveProfile(profile);
+        notifyListeners();
+    }
 
     Future<Profile> loadProfile() async {
         SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -24,7 +31,7 @@ class ProfileModel with ChangeNotifier {
         sharedPreferences.remove("Profile");
     }
 
-    void setProfile(Profile profile) async {
+    void saveProfile(Profile profile) async {
         SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
         sharedPreferences.setString("Profile", jsonEncode(profile));
     }
