@@ -11,7 +11,7 @@ class ProfileModel with ChangeNotifier {
     bool get profileLoaded => _profileLoaded;
     
     set profile(Profile profileToSet) {
-        profile = profileToSet;
+        _profile = profileToSet;
         _profileLoaded = true;
         saveProfile(profile);
         notifyListeners();

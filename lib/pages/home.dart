@@ -12,13 +12,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   static const String APP_NAME = 'Countero';
 
-  final profileModel = ProfileModel();
   TabController tabController;
 
   @override
   void initState() {
     super.initState();
-    profileModel.loadProfile();
     tabController = TabController(length: 2, vsync: this);
   }
 
@@ -30,34 +28,29 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => profileModel),
-        ],
-        child: Consumer<ProfileModel>(
-        builder: (
-            BuildContext context,
-            profileModel,
-            Widget child) {
-          return Scaffold(
-              appBar: AppBar(
-                title: Text(
-                  APP_NAME,
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-                bottom: profileModel.profile == null
-                    ? null
-                    : getTabs(context, tabController),
-                actions: [
-                  HomeSettings(profileModel.profile == null)
-                ],
+    return  Consumer<ProfileModel>(
+      builder: (
+          BuildContext context,
+          profileModel,
+          Widget child) {
+        return Scaffold(
+            appBar: AppBar(
+              title: Text(
+                APP_NAME,
+                style: Theme.of(context).textTheme.headline2,
               ),
-              body: profileModel.profile == null
-                  ? HomeEmpty()
-                  : HomeWithProfile(tabController),
-          );
-        }),
-    );
+              bottom: profileModel.profile == null
+                  ? null
+                  : getTabs(context, tabController),
+              actions: [
+                HomeSettings(profileModel.profile == null)
+              ],
+            ),
+            body: profileModel.profile == null
+                ? HomeEmpty()
+                : HomeWithProfile(tabController),
+        );
+      });
   }
 }
 
