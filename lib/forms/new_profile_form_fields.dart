@@ -2,6 +2,7 @@ import 'package:countero/forms/get_date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import 'package:select_form_field/select_form_field.dart';
 
 class CustomNumberFormField extends StatelessWidget {
   final String Function(String value) validator;
@@ -150,6 +151,45 @@ class CustomDateFormField extends StatelessWidget {
       lastDate: lastDate,
       initialDate: initialDate,
       firstDate: firstDate,
+      validator: validator,
+    );
+  }
+}
+
+class AppSelect extends StatelessWidget {
+  final String Function(String value) validator;
+  final String label;
+  final TextEditingController controller;
+  final List<Map<String, dynamic>> items;
+
+  AppSelect({
+    this.label,
+    this.controller,
+    this.validator,
+    this.items
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SelectFormField(
+      controller: controller,
+      style: TextStyle(fontSize: 17.0),
+      decoration: InputDecoration(
+          errorMaxLines: 1,
+          isDense: true,
+          contentPadding: EdgeInsets.all(1.0),
+          suffixIcon: Container(
+              height: 48,
+              width: 48,
+              child: Padding(
+                  padding: EdgeInsets.only(top: 11.0),
+                  child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Icon(Icons.arrow_drop_down)))
+          ),
+          labelText: label
+      ),
+      items: items,
       validator: validator,
     );
   }

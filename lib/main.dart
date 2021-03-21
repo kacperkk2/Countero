@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    profileModel.loadProfile();
+    loadUserData();
   }
 
   @override
@@ -38,5 +38,10 @@ class _MyAppState extends State<MyApp> {
         supportedLocales: [Locale('pl', 'PL')],
       )
     );
+  }
+
+  void loadUserData() async {
+    profileModel.profile = await profileModel.loadProfile();
+    profileModel.records = await profileModel.loadCostRecords();
   }
 }

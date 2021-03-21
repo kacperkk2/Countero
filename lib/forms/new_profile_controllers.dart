@@ -56,7 +56,19 @@ FixedCost createFixedCost(FixedCostsControllers fixedCostElement) {
 
 List<Category> createCategoriesList(List<CategoriesControllers> categoriesControllers) {
   List<Category> list = [];
-  int i = 0;
+  Category category1 = Category();
+  category1.id = 0;
+  category1.name = "Koszta stale";
+  category1.limit = null;
+  list.add(category1);
+
+  Category category2 = Category();
+  category2.id = 1;
+  category2.name = "Domyslna kategoria";
+  category2.limit = null;
+  list.add(category2);
+
+  int i = 2;
   for (var controller in categoriesControllers) {
     Category category = Category();
     category.id = i;

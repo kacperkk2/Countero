@@ -1,3 +1,5 @@
+import 'package:countero/pages/user_cost_records.dart';
+import 'package:countero/pages/user_reports.dart';
 import 'package:flutter/material.dart';
 import 'package:countero/models/profile_model.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +45,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   ? null
                   : getTabs(context, tabController),
               actions: [
-                HomeSettings(profileModel.profile == null)
+                HomeSettings(profileModel.profile != null)
               ],
             ),
             body: profileModel.profile == null
@@ -100,7 +102,10 @@ class HomeWithProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return TabBarView(
         controller: tabController,
-        children: []
+        children: [
+          UserCostRecords(),
+          UserReports()
+        ]
     );
   }
 }
@@ -146,21 +151,23 @@ class HomeSettings extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               child: Text(
-                  'Cofnij',
-                  style: TextStyle(color: Theme.of(context).accentColor, fontSize: 18.0)
+                'Cofnij',
+                style: TextStyle(color: Theme.of(context).accentColor, fontSize: 18.0)
               ),
               onPressed: () {
-                  Navigator.of(context).pop();
+                Navigator.of(context).pop();
               },
             ),
             TextButton(
               child: Text(
-                  'Usuń',
-                  style: TextStyle(color: Theme.of(context).errorColor, fontSize: 18.0)
+                'Usuń',
+                style: TextStyle(color: Theme.of(context).accentColor, fontSize: 18.0)
               ),
               onPressed: () {
-                  //TODO add deleting profile
-                  Navigator.of(context).pop();
+                var profileModel = Provider.of<ProfileModel>(context, listen: false);
+                profileModel.deleteCostRecords();
+                profileModel.deleteProfile();
+                Navigator.of(context).pop();
               },
             ),
           ],
@@ -171,17 +178,23 @@ class HomeSettings extends StatelessWidget {
 
   List<PopupMenuItem<SettingsElement>> getAvailableSettings(BuildContext context) {
     List<PopupMenuItem<SettingsElement>> itemList = [];
-    itemList.add(PopupMenuItem<SettingsElement>(
-        value: SettingsElement.TEST_PROFILE,
-        child: Row(
-          children: [
-            Icon(Icons.handyman, color: Theme.of(context).iconTheme.color),
-            SizedBox(width: 8),
-            Expanded(child: Text('Testowy profil', style: TextStyle(fontSize: 17.0))),
-          ],
-        )
-    ));
     if (!profileLoaded) {
+      itemList.add(PopupMenuItem<SettingsElement>(
+          value: SettingsElement.TEST_PROFILE,
+          child: Row(
+            children: [
+              Icon(Icons.handyman, color: Theme
+                  .of(context)
+                  .iconTheme
+                  .color),
+              SizedBox(width: 8),
+              Expanded(child: Text(
+                  'Testowy profil', style: TextStyle(fontSize: 17.0))),
+            ],
+          )
+      ));
+    }
+    if (profileLoaded) {
       itemList.add(PopupMenuItem<SettingsElement>(
           value: SettingsElement.DELETE_PROFILE,
           child: Row(
@@ -204,12 +217,12 @@ TabBar getTabs(BuildContext context, TabController controller) {
     unselectedLabelColor: Theme.of(context).primaryColorLight,
     tabs: [
       Tab(
-        icon: Icon(Icons.attach_money, size: 27.5),
-        child: Text("WYDATKI", style: TextStyle(fontSize: 15.0)),
+        icon: Icon(Icons.money_rounded, size: 27.5),
+        child: Text("REKORDY", style: TextStyle(fontSize: 15.0)),
       ),
       Tab(
-        icon: Icon(Icons.bar_chart, size: 25.5),
-        child: Text("BILANS", style: TextStyle(fontSize: 15.0)),
+        icon: Icon(Icons.stacked_line_chart, size: 25.5),
+        child: Text("RAPORTY", style: TextStyle(fontSize: 15.0)),
       ),
     ],
   );

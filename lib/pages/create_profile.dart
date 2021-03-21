@@ -1,9 +1,12 @@
 import 'package:countero/forms/new_profile_controllers.dart';
+import 'package:countero/models/cost_record.dart';
 import 'package:countero/models/profile.dart';
 import 'package:countero/models/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:countero/forms/new_profile_form.dart';
 import 'package:provider/provider.dart';
+
+import '../dates_formatter.dart';
 
 class CreateProfile extends StatelessWidget {
   final controllers = NewProfileControllers();
@@ -19,7 +22,7 @@ class CreateProfile extends StatelessWidget {
         formKey: formKey,
         controllers: controllers,
       ),
-      floatingActionButton: CreateProfileButton(
+      floatingActionButton: CustomSaveButton(
           formKey: formKey, onClick: () => createProfile(context)
       )
     );
@@ -29,15 +32,34 @@ class CreateProfile extends StatelessWidget {
     Profile profile = controllersToProfile(controllers);
     var profileModel = Provider.of<ProfileModel>(context, listen: false);
     profileModel.profile = profile;
+    
+    List<FixedCost> costs = profile.fixedCosts;
+    var monthsRange = generateRangeInMonths(profile.dateFrom, profile.dateTo);
+    List<CostRecord> costsInRange = [];
+    for (DateTime month in monthsRange) {
+      for (FixedCost cost in costs) {
+        if (monthInRange(month, cost.dateFrom, cost.dateTo)) {
+          costsInRange.add(
+              CostRecord(
+                  name: cost.name, 
+                  amount: cost.amount, 
+                  categoryId: 0,
+                  date: month
+              )
+          );
+        }
+      }
+    }
+    profileModel.records = costsInRange;
     Navigator.pop(context);
   }
 }
 
-class CreateProfileButton extends StatelessWidget {
+class CustomSaveButton extends StatelessWidget {
   final VoidCallback onClick;
   final GlobalKey<FormState> formKey;
 
-  CreateProfileButton({this.formKey, this.onClick});
+  CustomSaveButton({this.formKey, this.onClick});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +84,7 @@ class CreateProfileButton extends StatelessWidget {
           );
         }
       },
-      label: Text('Utworz profil'),
+      label: Text('Zatwierdź'),
       icon: Icon(Icons.create),
       backgroundColor: Theme.of(context).accentColor,
     );
