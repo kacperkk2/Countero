@@ -112,7 +112,8 @@ class HomeWithProfile extends StatelessWidget {
 
 enum SettingsElement {
   DELETE_PROFILE,
-  TEST_PROFILE
+  TEST_PROFILE,
+  INFO
 }
 
 class HomeSettings extends StatelessWidget {
@@ -135,7 +136,10 @@ class HomeSettings extends StatelessWidget {
         deleteProfile(context);
         break;
       case SettingsElement.TEST_PROFILE:
-        //TODO add test profile to test app
+        createTestData(context);
+        break;
+      case SettingsElement.INFO:
+        Navigator.pushNamed(context, MyRoute.INFO.route);
         break;
     }
   }
@@ -180,13 +184,21 @@ class HomeSettings extends StatelessWidget {
     List<PopupMenuItem<SettingsElement>> itemList = [];
     if (!profileLoaded) {
       itemList.add(PopupMenuItem<SettingsElement>(
+          value: SettingsElement.INFO,
+          child: Row(
+            children: [
+              Icon(Icons.info_outline, color: Theme.of(context).iconTheme.color),
+              SizedBox(width: 8),
+              Expanded(child: Text(
+                  'Informacje', style: TextStyle(fontSize: 17.0))),
+            ],
+          )
+      ));
+      itemList.add(PopupMenuItem<SettingsElement>(
           value: SettingsElement.TEST_PROFILE,
           child: Row(
             children: [
-              Icon(Icons.handyman, color: Theme
-                  .of(context)
-                  .iconTheme
-                  .color),
+              Icon(Icons.handyman, color: Theme.of(context).iconTheme.color),
               SizedBox(width: 8),
               Expanded(child: Text(
                   'Testowy profil', style: TextStyle(fontSize: 17.0))),
@@ -207,6 +219,12 @@ class HomeSettings extends StatelessWidget {
       ));
     }
     return itemList;
+  }
+
+  void createTestData(BuildContext context) {
+    var profileModel = Provider.of<ProfileModel>(context, listen: false);
+    profileModel.profile = createTestProfile();
+    profileModel.records = createTestCostRecords();
   }
 }
 

@@ -68,7 +68,7 @@ class CustomLineChart extends StatefulWidget {
 }
 
 class _CustomLineChartState extends State<CustomLineChart> {
-  List<Color> gradientColors = [const Color(0xFFB37CDB)];
+  List<Color> gradientColors = [Colors.blue[300]];
   List<FlSpot> spots;
   double maxY = 0.0;
 
@@ -229,7 +229,7 @@ class CustomBarChart extends StatefulWidget {
 }
 
 class _CustomBarChartState extends State<CustomBarChart> {
-  final Color barColor = Color(0xFFB37CDB);
+  final Color barColor = Colors.blue[300];
   final double width = 7;
 
   List<BarChartGroupData> showingBarGroups;
@@ -248,125 +248,125 @@ class _CustomBarChartState extends State<CustomBarChart> {
   Widget build(BuildContext context) {
     return maxValue > 0
         ? AspectRatio(
-      aspectRatio: 1,
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Text(
-              'Przekroczenia limitów kategorii',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                child: BarChart(
-                  BarChartData(
-                    groupsSpace: grossSpace,
-                    alignment: BarChartAlignment.center,
-                    barTouchData: BarTouchData(
-                        touchTooltipData: BarTouchTooltipData(
-                            tooltipBgColor: Colors.white,
-                            getTooltipItem:
-                                (group, groupIndex, rod, rodIndex) {
-                              return BarTooltipItem(
-                                  NumberFormat("###0", "pl_PL").format(rod.y),
-                                  TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold));
-                            })),
-                    titlesData: FlTitlesData(
-                      show: true,
-                      bottomTitles: SideTitles(
-                          showTitles: true,
-                          rotateAngle: 275,
-                          margin: 30,
-                          getTextStyles: (value) => TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
-                          getTitles: (double value) {
-                            String name =
-                                widget.categoriesMap[value.toInt()].name;
-                            return name.length > 15
-                                ? name.substring(0, 14) + "..."
-                                : name;
-                          }),
-                      leftTitles: SideTitles(
-                        showTitles: true,
-                        getTextStyles: (value) => const TextStyle(
-                            color: Color(0xff7589a2),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                        margin: 32,
-                        reservedSize: 14,
-                        interval: maxValue / 4,
-                        getTitles: (value) {
-                          NumberFormat f =  NumberFormat("##0.#", "pl_PL");
-                          if (value == 0) {
-                            return "0";
-                          } else if (value == maxValue / 4) {
-                            return f.format(maxValue / 4);
-                          } else if (value == maxValue / 2) {
-                            return f.format(maxValue / 2)
-                                .toString();
-                          } else if (value == 3 * maxValue / 4) {
-                            return f.format(3 * maxValue / 4)
-                                .toString();
-                          } else if (value == maxValue) {
-                            return f.format(maxValue.toDouble());
-                          } else {
-                            return '';
-                          }
-                        },
+          aspectRatio: 1,
+          child: Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Text(
+                  'Przekroczenia limitów kategorii',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    child: BarChart(
+                      BarChartData(
+                        groupsSpace: grossSpace,
+                        alignment: BarChartAlignment.center,
+                        barTouchData: BarTouchData(
+                            touchTooltipData: BarTouchTooltipData(
+                                tooltipBgColor: Colors.white,
+                                getTooltipItem:
+                                    (group, groupIndex, rod, rodIndex) {
+                                  return BarTooltipItem(
+                                      NumberFormat("###0", "pl_PL").format(rod.y),
+                                      TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold));
+                                })),
+                        titlesData: FlTitlesData(
+                          show: true,
+                          bottomTitles: SideTitles(
+                              showTitles: true,
+                              rotateAngle: 275,
+                              margin: 30,
+                              getTextStyles: (value) => TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14),
+                              getTitles: (double value) {
+                                String name =
+                                    widget.categoriesMap[value.toInt()].name;
+                                return name.length > 15
+                                    ? name.substring(0, 14) + "..."
+                                    : name;
+                              }),
+                          leftTitles: SideTitles(
+                            showTitles: true,
+                            getTextStyles: (value) => const TextStyle(
+                                color: Color(0xff7589a2),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                            margin: 32,
+                            reservedSize: 14,
+                            interval: maxValue / 4,
+                            getTitles: (value) {
+                              NumberFormat f =  NumberFormat("##0.#", "pl_PL");
+                              if (value == 0) {
+                                return "0";
+                              } else if (value == maxValue / 4) {
+                                return f.format(maxValue / 4);
+                              } else if (value == maxValue / 2) {
+                                return f.format(maxValue / 2)
+                                    .toString();
+                              } else if (value == 3 * maxValue / 4) {
+                                return f.format(3 * maxValue / 4)
+                                    .toString();
+                              } else if (value == maxValue) {
+                                return f.format(maxValue.toDouble());
+                              } else {
+                                return '';
+                              }
+                            },
+                          ),
+                        ),
+                        gridData: FlGridData(
+                          show: true,
+                          horizontalInterval: maxValue / 4,
+                          getDrawingHorizontalLine: (value) {
+                            var primaryColorLight =
+                                Theme.of(context).primaryColorLight;
+                            if (value == maxValue / 4) {
+                              return FlLine(
+                                  color: primaryColorLight, strokeWidth: 1);
+                            } else if (value == maxValue / 2) {
+                              return FlLine(
+                                  color: primaryColorLight, strokeWidth: 1);
+                            } else if (value == 3 * maxValue / 4) {
+                              return FlLine(
+                                  color: primaryColorLight, strokeWidth: 1);
+                            } else {
+                              return FlLine(color: Colors.transparent);
+                            }
+                          },
+                        ),
+                        borderData: FlBorderData(
+                            show: true,
+                            border: Border.symmetric(
+                                horizontal: BorderSide(
+                                    color:
+                                    Theme.of(context).primaryColorLight,
+                                    width: 1))),
+                        barGroups: showingBarGroups,
                       ),
                     ),
-                    gridData: FlGridData(
-                      show: true,
-                      horizontalInterval: maxValue / 4,
-                      getDrawingHorizontalLine: (value) {
-                        var primaryColorLight =
-                            Theme.of(context).primaryColorLight;
-                        if (value == maxValue / 4) {
-                          return FlLine(
-                              color: primaryColorLight, strokeWidth: 1);
-                        } else if (value == maxValue / 2) {
-                          return FlLine(
-                              color: primaryColorLight, strokeWidth: 1);
-                        } else if (value == 3 * maxValue / 4) {
-                          return FlLine(
-                              color: primaryColorLight, strokeWidth: 1);
-                        } else {
-                          return FlLine(color: Colors.transparent);
-                        }
-                      },
-                    ),
-                    borderData: FlBorderData(
-                        show: true,
-                        border: Border.symmetric(
-                            horizontal: BorderSide(
-                                color:
-                                Theme.of(context).primaryColorLight,
-                                width: 1))),
-                    barGroups: showingBarGroups,
                   ),
                 ),
-              ),
+                const SizedBox(
+                  height: 25,
+                ),
+              ],
             ),
-            const SizedBox(
-              height: 25,
-            ),
-          ],
-        ),
-      ),
-    )
+          ),
+        )
         : Container();
   }
 

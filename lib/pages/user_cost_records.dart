@@ -36,7 +36,7 @@ class UserCostRecords extends StatelessWidget {
             bottomNavigationBar: Visibility(
               visible: isDateFromBeforeNow,
               child: UserCostRecordsSummary(
-                monthlyBalance: profileModel.records.isNotEmpty &&
+                monthlyBalance:
                     getDatesMonthDiff(DateTime.now(), profile.dateTo) >= 0
                     ? getAmountOfTheMonth(costRecordsMap[profileDateRange.last], profile)
                     : 0.0,
@@ -245,8 +245,7 @@ class _UserCostRecordsNotEmptyState extends State<UserCostRecordsNotEmpty> {
     listTiles.add(MonthTile(
       month: toMonth(date),
       spared: groupedRecords.moneySaved,
-      first:
-      listTiles.isEmpty && getDatesMonthDiff(date, DateTime.now()) == 0,
+      first: listTiles.isEmpty && getDatesMonthDiff(date, DateTime.now()) == 0,
       onAnalyticsTap: () {
         //TODO go to analytics
       },
@@ -341,7 +340,6 @@ class MonthTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String moneyPrefix = spared >= 0 ? "+" : "";
-    // Color moneyColor = spared >= 0 ? Color(0xFF8CD867) : Colors.red[400];
     Color moneyColor = spared >= 0 ? Colors.green[400] : Colors.red[400];
 
     return Container(
@@ -358,10 +356,6 @@ class MonthTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    moneyPrefix + NumberFormat("###,###,##0.00", "pl_PL").format(spared),
-                    style: TextStyle(fontSize: 13.0, color: moneyColor),
-                  ),
                   IconButton(
                     padding: EdgeInsets.zero,
                     constraints: BoxConstraints(),
@@ -370,6 +364,10 @@ class MonthTile extends StatelessWidget {
                       Icons.analytics_outlined,
                       color: Theme.of(context).indicatorColor,
                     ),
+                  ),
+                  Text(
+                    moneyPrefix + NumberFormat("###,###,##0.00", "pl_PL").format(spared),
+                    style: TextStyle(fontSize: 13.0, color: moneyColor),
                   )
                 ],
               ),

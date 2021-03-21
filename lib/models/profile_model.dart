@@ -205,3 +205,94 @@ class ProfileModel with ChangeNotifier {
         return Map.fromIterable(profile.categories, key: (e) => e.id, value: (e) => e);
     }
 }
+
+
+// Test data
+Profile createTestProfile() {
+    Profile testProfile = Profile();
+    testProfile.earnings = 6000.0;
+    testProfile.target = 4000.0;
+    testProfile.dateFrom = DateTime(2020, 1, 1);
+    testProfile.dateTo = DateTime(2020, 5, 1);
+    testProfile.fixedCosts = [
+        FixedCost(
+            dateFrom: DateTime(2020, 1, 1),
+            dateTo: DateTime(2020, 5, 1),
+            name: 'Czynsz',
+            amount: 1300.0
+        ),
+        FixedCost(
+            dateFrom: DateTime(2020, 1, 1),
+            dateTo: DateTime(2020, 3, 1),
+            name: 'MultiSport',
+            amount: 150.0
+        ),
+        FixedCost(
+            dateFrom: DateTime(2020, 2, 1),
+            dateTo: DateTime(2020, 5, 1),
+            name: 'Medicover',
+            amount: 300.0
+        ),
+    ];
+    testProfile.categories = [
+        Category(id: 0, name: "Koszta stale"),
+        Category(id: 1, name: "Domyslna kategoria"),
+        Category(id: 2, name: "Rozrywka", limit: 500),
+        Category(id: 3, name: "Jedzenie", limit: 800),
+        Category(id: 4, name: "Imprezy", limit: 200),
+    ];
+    return testProfile;
+}
+
+List<CostRecord> createTestCostRecords() {
+    int month = 1;
+    List<CostRecord> records = [];
+    records.add(CostRecord(name: 'Czynsz', amount: 1300.0, categoryId: 0, date: DateTime(2020, month, 1)));
+    records.add(CostRecord(name: 'MultiSport', amount: 150.0, categoryId: 0, date: DateTime(2020, month, 1)));
+    records.add(CostRecord(name: 'Gokarty', amount: 100.0, categoryId: 2, date: DateTime(2020, month, 4)));
+    records.add(CostRecord(name: 'Biedra', amount: 200.0, categoryId: 3, date: DateTime(2020, month, 10)));
+    records.add(CostRecord(name: 'Urodziny Andrzeja', amount: 150.0, categoryId: 4, date: DateTime(2020, month, 12)));
+    records.add(CostRecord(name: 'Żabka', amount: 300.0, categoryId: 3, date: DateTime(2020, month, 19)));
+    records.add(CostRecord(name: 'Grube zakupy', amount: 200.0, categoryId: 3, date: DateTime(2020, month, 23)));
+    records.add(CostRecord(name: 'Wisełka', amount: 75.0, categoryId: 4, date: DateTime(2020, month, 26)));
+    records.add(CostRecord(name: 'Trampoliny', amount: 100.0, categoryId: 2, date: DateTime(2020, month, 29)));
+    month++;
+    records.add(CostRecord(name: 'Czynsz', amount: 1300.0, categoryId: 0, date: DateTime(2020, month, 1)));
+    records.add(CostRecord(name: 'MultiSport', amount: 150.0, categoryId: 0, date: DateTime(2020, month, 1)));
+    records.add(CostRecord(name: 'Medicover', amount: 300.0, categoryId: 0, date: DateTime(2020, month, 1)));
+    records.add(CostRecord(name: 'Wycieczka', amount: 800.0, categoryId: 2, date: DateTime(2020, month, 9)));
+    records.add(CostRecord(name: 'Pizza', amount: 50.0, categoryId: 3, date: DateTime(2020, month, 10)));
+    records.add(CostRecord(name: 'Spontaniczne wyjście', amount: 60.0, categoryId: 4, date: DateTime(2020, month, 11)));
+    records.add(CostRecord(name: 'Zakupy', amount: 500.0, categoryId: 3, date: DateTime(2020, month, 15)));
+    records.add(CostRecord(name: 'Zakupy', amount: 200.0, categoryId: 3, date: DateTime(2020, month, 19)));
+    records.add(CostRecord(name: 'Piwko', amount: 50.0, categoryId: 4, date: DateTime(2020, month, 26)));
+    records.add(CostRecord(name: 'Ścianka wspinaczkowa', amount: 35.0, categoryId: 2, date: DateTime(2020, month, 27)));
+    month++;
+    records.add(CostRecord(name: 'Czynsz', amount: 1300.0, categoryId: 0, date: DateTime(2020, month, 1)));
+    records.add(CostRecord(name: 'MultiSport', amount: 150.0, categoryId: 0, date: DateTime(2020, month, 1)));
+    records.add(CostRecord(name: 'Medicover', amount: 300.0, categoryId: 0, date: DateTime(2020, month, 1)));
+    records.add(CostRecord(name: 'Wycieczka', amount: 400.0, categoryId: 2, date: DateTime(2020, month, 3)));
+    records.add(CostRecord(name: 'Restauracja', amount: 100.0, categoryId: 3, date: DateTime(2020, month, 13)));
+    records.add(CostRecord(name: 'Spontaniczne wyjście', amount: 60.0, categoryId: 4, date: DateTime(2020, month, 15)));
+    records.add(CostRecord(name: 'Zakupy', amount: 700.0, categoryId: 3, date: DateTime(2020, month, 15)));
+    records.add(CostRecord(name: 'Zakupy', amount: 300.0, categoryId: 3, date: DateTime(2020, month, 19)));
+    month++;
+    records.add(CostRecord(name: 'Czynsz', amount: 1300.0, categoryId: 0, date: DateTime(2020, month, 1)));
+    records.add(CostRecord(name: 'Medicover', amount: 300.0, categoryId: 0, date: DateTime(2020, month, 1)));
+    records.add(CostRecord(name: 'Darty i bilard', amount: 100.0, categoryId: 2, date: DateTime(2020, month, 15)));
+    records.add(CostRecord(name: 'Zakupy', amount: 550.0, categoryId: 3, date: DateTime(2020, month, 16)));
+    records.add(CostRecord(name: 'Urodziny Michała', amount: 60.0, categoryId: 4, date: DateTime(2020, month, 17)));
+    records.add(CostRecord(name: 'Zakupy', amount: 200.0, categoryId: 3, date: DateTime(2020, month, 28)));
+    records.add(CostRecord(name: 'Komputer', amount: 6000.0, categoryId: 2, date: DateTime(2020, month, 28)));
+    month++;
+    records.add(CostRecord(name: 'Czynsz', amount: 1300.0, categoryId: 0, date: DateTime(2020, month, 1)));
+    records.add(CostRecord(name: 'Medicover', amount: 300.0, categoryId: 0, date: DateTime(2020, month, 1)));
+    records.add(CostRecord(name: 'Majówka', amount: 1000.0, categoryId: 2, date: DateTime(2020, month, 3)));
+    records.add(CostRecord(name: 'Pizza', amount: 50.0, categoryId: 3, date: DateTime(2020, month, 10)));
+    records.add(CostRecord(name: 'Wieczór u Karola', amount: 60.0, categoryId: 4, date: DateTime(2020, month, 11)));
+    records.add(CostRecord(name: 'Zakupy', amount: 300.0, categoryId: 3, date: DateTime(2020, month, 15)));
+    records.add(CostRecord(name: 'Zakupy', amount: 400.0, categoryId: 3, date: DateTime(2020, month, 19)));
+    records.add(CostRecord(name: 'Piwko', amount: 50.0, categoryId: 4, date: DateTime(2020, month, 26)));
+    records.add(CostRecord(name: 'Trampoliny', amount: 35.0, categoryId: 2, date: DateTime(2020, month, 27)));
+    return records;
+}
