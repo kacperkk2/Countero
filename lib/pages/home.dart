@@ -83,6 +83,7 @@ class HomeEmpty extends StatelessWidget {
               child: Icon(
                 Icons.attach_money,
                 size: 100.0,
+                color: Theme.of(context).primaryColor,
               ),
               padding: EdgeInsets.all(30.0),
               shape: CircleBorder(),

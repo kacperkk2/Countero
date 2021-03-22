@@ -91,7 +91,7 @@ class _ExpenseFormState extends State<NewCostRecordForm> {
     List<Map<String, dynamic>> list = List.generate(
         categories.length,
             (index) => {
-          'value': (categories[index].id + 1).toString(),
+          'value': (categories[index].id).toString(),
           'label': categories[index].name
         });
     return list;

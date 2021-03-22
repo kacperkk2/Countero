@@ -29,7 +29,7 @@ class UserCostRecords extends StatelessWidget {
                   ? UserCostRecordsEmpty()
                   : UserCostRecordsNotEmpty(
                     categoryMap: profileModel.categoriesMap,
-                    profile: profile,
+                    profileModel: profileModel,
                     dateRange: profileDateRange,
                     costRecordsMap: costRecordsMap,
                   )
@@ -174,13 +174,13 @@ class UserCostRecordsSummary extends StatelessWidget {
 
 class UserCostRecordsNotEmpty extends StatefulWidget {
   final Map<int, Category> categoryMap;
-  final Profile profile;
+  ProfileModel profileModel;
   final Map<DateTime, GroupedCostRecords> costRecordsMap;
   final List<DateTime> dateRange;
 
   UserCostRecordsNotEmpty({
     this.categoryMap, 
-    this.profile, 
+    this.profileModel,
     this.costRecordsMap, 
     this.dateRange
   });
@@ -190,6 +190,13 @@ class UserCostRecordsNotEmpty extends StatefulWidget {
 }
 
 class _UserCostRecordsNotEmptyState extends State<UserCostRecordsNotEmpty> {
+
+  @override
+  void initState() {
+    super.initState();
+    widget.profileModel = Provider.of<ProfileModel>(context, listen: false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -248,9 +255,11 @@ class _UserCostRecordsNotEmptyState extends State<UserCostRecordsNotEmpty> {
       month: toMonth(date),
       spared: groupedRecords.moneySaved,
       first: listTiles.isEmpty && getDatesMonthDiff(date, DateTime.now()) == 0,
-      onAnalyticsTap: () {
-        //TODO go to analytics
-      },
+      onAnalyticsTap: () => Navigator.pushNamed(
+        context,
+        MyRoute.MONTH_CHARTS.route,
+        arguments: groupedRecords,
+      ),
     ));
     listTiles.add(CustomDivider(first: true));
   }
@@ -274,8 +283,7 @@ class _UserCostRecordsNotEmptyState extends State<UserCostRecordsNotEmpty> {
                 name: records[index ~/ 2].name,
                 value: records[index ~/ 2].value,
                 date: records[index ~/ 2].date,
-                category:
-                  widget.categoryMap[records[index ~/ 2].categoryId].name
+                category: widget.profileModel.categoriesMap[records[index ~/ 2].categoryId].name,
               )
               : CustomDivider(last: index == records.length * 2 - 1));
       list.addAll(expenseTiles);
@@ -364,8 +372,8 @@ class MonthTile extends StatelessWidget {
                     constraints: BoxConstraints(),
                     onPressed: () => onAnalyticsTap.call(),
                     icon: Icon(
-                      Icons.analytics_outlined,
-                      color: Theme.of(context).indicatorColor,
+                      Icons.read_more,
+                      color: Theme.of(context).accentColor,
                     ),
                   ),
                   Text(

@@ -22,7 +22,7 @@ class _UserReportsState extends State<UserReports> {
           height: 10,
         ),
         Text(
-          'Zaoszczedzono',
+          'Oszczędzanie',
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
@@ -119,11 +119,12 @@ class _CustomLineChartState extends State<CustomLineChart> {
         show: true,
         bottomTitles: SideTitles(
           showTitles: true,
-          rotateAngle: 270,
+          rotateAngle: 320,
           getTextStyles: (value) => const TextStyle(
-              color: Colors.white,
+              color: Colors.grey,
               fontWeight: FontWeight.bold,
-              fontSize: 12),
+              fontSize: 12
+          ),
           getTitles: (value) {
             if (value > 0 && value % 1.0 == 0) {
               return DateFormat('MM-yyyy', "pl").format(widget.dateRange[(value.toInt() - 1)]);
@@ -150,7 +151,7 @@ class _CustomLineChartState extends State<CustomLineChart> {
         leftTitles: SideTitles(
           showTitles: true,
           getTextStyles: (value) => const TextStyle(
-            color: Color(0xff7589a2),
+            color: Colors.grey,
             fontWeight: FontWeight.bold,
             fontSize: 15,
           ),
@@ -273,7 +274,7 @@ class _CustomBarChartState extends State<CustomBarChart> {
                         alignment: BarChartAlignment.center,
                         barTouchData: BarTouchData(
                             touchTooltipData: BarTouchTooltipData(
-                                tooltipBgColor: Colors.white,
+                                tooltipBgColor: Colors.grey,
                                 getTooltipItem:
                                     (group, groupIndex, rod, rodIndex) {
                                   return BarTooltipItem(
@@ -286,10 +287,10 @@ class _CustomBarChartState extends State<CustomBarChart> {
                           show: true,
                           bottomTitles: SideTitles(
                               showTitles: true,
-                              rotateAngle: 275,
-                              margin: 30,
+                              rotateAngle: 320,
+                              margin: 15,
                               getTextStyles: (value) => TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.grey,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14),
                               getTitles: (double value) {
@@ -302,10 +303,10 @@ class _CustomBarChartState extends State<CustomBarChart> {
                           leftTitles: SideTitles(
                             showTitles: true,
                             getTextStyles: (value) => const TextStyle(
-                                color: Color(0xff7589a2),
+                                color: Colors.grey,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14),
-                            margin: 32,
+                            margin: 25,
                             reservedSize: 14,
                             interval: maxValue / 4,
                             getTitles: (value) {

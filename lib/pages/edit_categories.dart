@@ -34,6 +34,16 @@ class _EditCategoriesState extends State<EditCategories> {
           key: formKey,
           child: ListView(
             children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Text("Usunięcie kategorii przypisanej do rekordów spowoduje "
+                      "przypisanie tych rekordów do kategorii domyślnej",
+                    style: TextStyle(
+                      color: Theme.of(context).errorColor,
+                      fontSize: 14.0,
+                    ),
+                ),
+              ),
               CategoriesSection(
                 controllers: categoriesControllers,
                 categoriesCount: categoriesControllers.length
@@ -49,7 +59,29 @@ class _EditCategoriesState extends State<EditCategories> {
   }
 
   void updateProfile(BuildContext context) {
+    List<Category> oldCategories = profileModel.profile.categories;
+    // for (var category in oldCategories) {
+    //   print("${category.name}, ${category.id}");
+    // }
     profileModel.profile.categories = createCategoriesList(categoriesControllers);
+    Map<int, int> oldToNewCategoriesId = {};
+    for (var oldCategory in oldCategories) {
+      bool found = false;
+      for (var newCategory in profileModel.profile.categories) {
+        if (oldCategory.name == newCategory.name) {
+          oldToNewCategoriesId[oldCategory.id] = newCategory.id;
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        oldToNewCategoriesId[oldCategory.id] = 1; // domyslna kategoria
+      }
+    }
+
+    for (var record in profileModel.records) {
+      record.categoryId = oldToNewCategoriesId[record.categoryId];
+    }
     Navigator.pop(context);
   }
 

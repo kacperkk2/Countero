@@ -50,6 +50,7 @@ class _CreateCostRecordState extends State<CreateCostRecord> {
 
   saveCostRecord(int expenseIdx) {
     CostRecord record = controllersToCostRecord(costRecordControllers);
+    print(record.categoryId);
     var profileModel = Provider.of<ProfileModel>(context, listen: false);
     expenseIdx == null
         ? profileModel.saveSingleCostRecord(record)
