@@ -1,3 +1,4 @@
+import 'package:countero/pages/edit_categories.dart';
 import 'package:countero/validators/validators.dart';
 import 'package:flutter/material.dart';
 import 'new_profile_controllers.dart';
@@ -6,8 +7,17 @@ import 'new_profile_form_fields.dart';
 class NewProfileForm extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final NewProfileControllers controllers;
+  final int fixedCostCount;
+  final int categoriesCount;
+  final bool leaveDates;
 
-  NewProfileForm({this.formKey, this.controllers});
+  NewProfileForm({
+    this.formKey,
+    this.controllers,
+    this.fixedCostCount,
+    this.categoriesCount,
+    this.leaveDates = false,
+  });
 
   @override
   _NewProfileForm createState() => _NewProfileForm();
@@ -21,13 +31,17 @@ class _NewProfileForm extends State<NewProfileForm> {
       child: ListView(
         children: <Widget>[
           EarningsAndTargetSection(
-              controllers: widget.controllers.data
+              controllers: widget.controllers.data,
+              leaveDates: widget.leaveDates
           ),
           FixedCostsSection(
-              controllers: widget.controllers
+              controllers: widget.controllers,
+              fixedCostCount: widget.fixedCostCount,
+              leaveDates: widget.leaveDates
           ),
           CategoriesSection(
-              controllers: widget.controllers.categories
+              controllers: widget.controllers.categories,
+              categoriesCount: widget.categoriesCount
           ),
           SizedBox(height: 30.0)
         ],
@@ -38,8 +52,9 @@ class _NewProfileForm extends State<NewProfileForm> {
 
 class EarningsAndTargetSection extends StatefulWidget {
   final BasicDataControllers controllers;
+  final bool leaveDates;
 
-  EarningsAndTargetSection({this.controllers});
+  EarningsAndTargetSection({this.controllers, this.leaveDates});
 
   @override
   _EarningsAndTargetSectionState createState() => _EarningsAndTargetSectionState();
@@ -75,11 +90,13 @@ class _EarningsAndTargetSectionState extends State<EarningsAndTargetSection> {
                 ),
                 SizedBox(height: 20.0),
                 BeginDateField(
-                  controller: widget.controllers.dateFrom
+                  controller: widget.controllers.dateFrom,
+                  leaveDates: widget.leaveDates,
                 ),
                 SizedBox(height: 20.0),
                 FinishDateField(
                   controller: widget.controllers.dateTo,
+                  leaveDates: widget.leaveDates,
                   validator: Validator.datesValidator(
                     beginDateController: widget.controllers.dateFrom
                   )
@@ -150,8 +167,10 @@ class _ToggledHeaderState extends State<ToggledHeader> {
 
 class FixedCostsSection extends StatefulWidget {
   final NewProfileControllers controllers;
+  final int fixedCostCount;
+  final bool leaveDates;
 
-  FixedCostsSection({this.controllers});
+  FixedCostsSection({this.controllers, this.fixedCostCount, this.leaveDates});
 
   @override
   _FixedCostsSectionState createState() => _FixedCostsSectionState();
@@ -159,7 +178,18 @@ class FixedCostsSection extends StatefulWidget {
 
 class _FixedCostsSectionState extends State<FixedCostsSection> {
   bool minimized = false;
-  int listSize = 0;
+  int listSize;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.fixedCostCount != null) {
+      listSize = widget.fixedCostCount;
+    }
+    else {
+      listSize = 0;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +200,9 @@ class _FixedCostsSectionState extends State<FixedCostsSection> {
           padding: EdgeInsets.only(left: 15.0, right: 15.0),
           child: FixedCostSectionElement(
               controllers: widget.controllers.fixedCosts[index ~/ 2],
-              onRemove: () => pop(index ~/ 2))
+              onRemove: () => pop(index ~/ 2),
+              leaveDates: widget.leaveDates
+          ),
         )
         : Padding(
           padding: EdgeInsets.only(top: 20.0),
@@ -245,8 +277,9 @@ class AddListElementButton extends StatelessWidget {
 class FixedCostSectionElement extends StatefulWidget {
   final VoidCallback onRemove;
   final FixedCostsControllers controllers;
+  final bool leaveDates;
 
-  FixedCostSectionElement({this.controllers, this.onRemove});
+  FixedCostSectionElement({this.controllers, this.onRemove, this.leaveDates});
 
   @override
   _FixedCostSectionElementState createState() => _FixedCostSectionElementState();
@@ -289,12 +322,14 @@ class _FixedCostSectionElementState extends State<FixedCostSectionElement> {
         SizedBox(height: 20.0),
         BeginDateField(
           controller: widget.controllers.dateFrom,
+          leaveDates: widget.leaveDates,
         ),
         SizedBox(height: 20.0),
         FinishDateField(
           controller: widget.controllers.dateTo,
           validator: Validator.datesValidator(
           beginDateController: widget.controllers.dateFrom),
+          leaveDates: widget.leaveDates,
         ),
       ],
     );
@@ -303,8 +338,9 @@ class _FixedCostSectionElementState extends State<FixedCostSectionElement> {
 
 class CategoriesSection extends StatefulWidget {
   final List<CategoriesControllers> controllers;
+  final int categoriesCount;
 
-  CategoriesSection({this.controllers});
+  CategoriesSection({this.controllers, this.categoriesCount});
   
   @override
   _CategoriesSectionState createState() => _CategoriesSectionState();
@@ -312,7 +348,18 @@ class CategoriesSection extends StatefulWidget {
 
 class _CategoriesSectionState extends State<CategoriesSection> {
   bool minimized = false;
-  int listSize = 0;
+  int listSize;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.categoriesCount != null) {
+      listSize = widget.categoriesCount;
+    }
+    else {
+      listSize = 0;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -320,10 +367,11 @@ class _CategoriesSectionState extends State<CategoriesSection> {
         listSize * 2,
         (index) => index.isEven
         ? Padding(
-        padding: EdgeInsets.only(left: 15.0, right: 15.0),
-        child: CategoriesSectionElement(
-            controllers: widget.controllers[index ~/ 2],
-            onRemove: () => pop(index ~/ 2))
+          padding: EdgeInsets.only(left: 15.0, right: 15.0),
+          child: CategoriesSectionElement(
+              controllers: widget.controllers[index ~/ 2],
+              onRemove: () => pop(index ~/ 2)
+          )
         )
         : Padding(
           padding: EdgeInsets.only(top: 20.0),

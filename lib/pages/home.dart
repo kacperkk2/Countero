@@ -113,7 +113,8 @@ class HomeWithProfile extends StatelessWidget {
 enum SettingsElement {
   DELETE_PROFILE,
   TEST_PROFILE,
-  INFO
+  INFO,
+  EDIT_CATEGORIES
 }
 
 class HomeSettings extends StatelessWidget {
@@ -140,6 +141,9 @@ class HomeSettings extends StatelessWidget {
         break;
       case SettingsElement.INFO:
         Navigator.pushNamed(context, MyRoute.INFO.route);
+        break;
+      case SettingsElement.EDIT_CATEGORIES:
+        Navigator.pushNamed(context, MyRoute.EDIT_CATEGORIES.route);
         break;
     }
   }
@@ -207,6 +211,16 @@ class HomeSettings extends StatelessWidget {
       ));
     }
     if (profileLoaded) {
+      itemList.add(PopupMenuItem<SettingsElement>(
+          value: SettingsElement.EDIT_CATEGORIES,
+          child: Row(
+            children: [
+              Icon(Icons.edit, color: Theme.of(context).iconTheme.color),
+              SizedBox(width: 8),
+              Expanded(child: Text('Edytuj kategorie', style: TextStyle(fontSize: 17.0))),
+            ],
+          )
+      ));
       itemList.add(PopupMenuItem<SettingsElement>(
           value: SettingsElement.DELETE_PROFILE,
           child: Row(

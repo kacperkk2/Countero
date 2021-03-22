@@ -54,4 +54,9 @@ class GroupedCostRecords {
     this.monthTarget,
     this.date
   });
+
+  @override
+  String toString() {
+    return "$moneySaved, $moneyPaid, $monthTarget, $records, $date";
+  }
 }

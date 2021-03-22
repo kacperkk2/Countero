@@ -22,6 +22,7 @@ class UserCostRecords extends StatelessWidget {
           var costRecordsMap =
               profileModel.getCostRecordsDividedByDateRange(profileDateRange, profile);
           var isDateFromBeforeNow = profile.dateFrom.isBefore(DateTime.now());
+
           return Scaffold(
             body: isDateFromBeforeNow
                 ? profileModel.records.isEmpty
@@ -221,7 +222,8 @@ class _UserCostRecordsNotEmptyState extends State<UserCostRecordsNotEmpty> {
           addYearTile(date, listTiles);
         }
         addMonthTile(listTiles, date, groupedRecords);
-      } else {
+      }
+      else {
         listTiles.add(CustomDivider(first: true));
       }
       addRecordsToList(groupedRecords.records, listTiles);
@@ -277,7 +279,8 @@ class _UserCostRecordsNotEmptyState extends State<UserCostRecordsNotEmpty> {
               )
               : CustomDivider(last: index == records.length * 2 - 1));
       list.addAll(expenseTiles);
-    } else {
+    }
+    else {
       list.addAll(<Widget>[
         EmptyTile(),
         CustomDivider(last: true),

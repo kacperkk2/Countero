@@ -7,6 +7,15 @@ class NewProfileControllers {
   BasicDataControllers data = BasicDataControllers();
   List<FixedCostsControllers> fixedCosts = [];
   List<CategoriesControllers> categories = [];
+
+  FixedCostsControllers convertCostToController(FixedCost cost) {
+    FixedCostsControllers controllers = FixedCostsControllers();
+    controllers.dateFrom.text = cost.dateFrom.toString();
+    controllers.dateTo.text = cost.dateTo.toString();
+    controllers.name.text = cost.name.toString();
+    controllers.amount.text = cost.amount.toString();
+    return controllers;
+  }
 }
 
 class BasicDataControllers {
@@ -54,7 +63,8 @@ FixedCost createFixedCost(FixedCostsControllers fixedCostElement) {
   return fixedCost;
 }
 
-List<Category> createCategoriesList(List<CategoriesControllers> categoriesControllers) {
+List<Category> createCategoriesList(
+    List<CategoriesControllers> categoriesControllers) {
   List<Category> list = [];
   Category category1 = Category();
   category1.id = 0;

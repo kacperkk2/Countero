@@ -1,3 +1,4 @@
+import 'package:countero/pages/edit_categories.dart';
 import 'package:countero/pages/info.dart';
 import 'package:countero/pages/modify_cost_record.dart';
 import 'package:countero/pages/create_profile.dart';
@@ -9,6 +10,7 @@ enum MyRoute {
   CREATE_PROFILE,
   MODIFY_COST_RECORD,
   INFO,
+  EDIT_CATEGORIES
 }
 
 extension RouteExtension on MyRoute {
@@ -17,6 +19,7 @@ extension RouteExtension on MyRoute {
     MyRoute.CREATE_PROFILE: '/create_profile',
     MyRoute.MODIFY_COST_RECORD: '/modify_cost_record',
     MyRoute.INFO: '/info',
+    MyRoute.EDIT_CATEGORIES: '/edit_categories',
   };
 
   String get route => routes[this];
@@ -28,5 +31,6 @@ Map<String, WidgetBuilder> getRoutes() {
     MyRoute.CREATE_PROFILE.route: (context) => CreateProfile(),
     MyRoute.MODIFY_COST_RECORD.route: (context) => CreateCostRecord(),
     MyRoute.INFO.route: (context) => Info(),
+    MyRoute.EDIT_CATEGORIES.route: (context) => EditCategories(),
   };
 }

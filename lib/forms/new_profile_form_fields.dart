@@ -86,8 +86,9 @@ class CustomTextFormField extends StatelessWidget {
 
 class BeginDateField extends StatelessWidget {
   final TextEditingController controller;
+  final bool leaveDates;
 
-  BeginDateField({this.controller});
+  BeginDateField({this.controller, this.leaveDates});
 
   @override
   Widget build(BuildContext context) {
@@ -96,8 +97,8 @@ class BeginDateField extends StatelessWidget {
       controller: controller,
       label: "Data rozpoczecia",
       lastDate: currentDate.add(Duration(days: 366 * 10)),
-      firstDate: currentDate,
-      initialDate: currentDate,
+      firstDate: leaveDates ? DateTime.parse(controller.text) : currentDate,
+      initialDate: leaveDates ? DateTime.parse(controller.text) : currentDate,
     );
   }
 }
@@ -105,8 +106,9 @@ class BeginDateField extends StatelessWidget {
 class FinishDateField extends StatelessWidget {
   final TextEditingController controller;
   final String Function(String) validator;
+  final bool leaveDates;
 
-  FinishDateField({this.controller, this.validator});
+  FinishDateField({this.controller, this.leaveDates, this.validator});
 
   @override
   Widget build(BuildContext context) {
@@ -115,8 +117,10 @@ class FinishDateField extends StatelessWidget {
       controller: controller,
       label: "Data zakonczenia",
       lastDate: currentDate.add(Duration(days: 366 * 10)),
-      initialDate: DateTime(currentDate.year, currentDate.month + 1, 1),
-      firstDate: currentDate,
+      initialDate: leaveDates
+          ? DateTime.parse(controller.text)
+          : DateTime(currentDate.year, currentDate.month + 1, 1),
+      firstDate: leaveDates ? DateTime.parse(controller.text) : currentDate,
       validator: validator,
     );
   }
