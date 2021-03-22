@@ -49,7 +49,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               ],
             ),
             body: profileModel.profile == null
-                ? HomeEmpty()
+                ? HomeEmpty(profileLoaded: profileModel.profileLoaded)
                 : HomeWithProfile(tabController),
         );
       });
@@ -58,39 +58,44 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
 
 class HomeEmpty extends StatelessWidget {
+  final bool profileLoaded;
+  HomeEmpty({this.profileLoaded});
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "Rozpocznij!",
-              style: Theme.of(context).textTheme.headline1,
-            ),
-            SizedBox(height: 30,),
-            RawMaterialButton(
-              onPressed: () {
-                Navigator.pushNamed(
-                    context,
-                    MyRoute.CREATE_PROFILE.route
-                );
-              },
-              elevation: 2.0,
-              fillColor: Theme.of(context).accentColor,
-              textStyle: Theme.of(context).textTheme.headline1,
-              child: Icon(
-                Icons.attach_money,
-                size: 100.0,
-                color: Theme.of(context).primaryColor,
+    return profileLoaded
+        ? Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Rozpocznij!",
+                style: Theme.of(context).textTheme.headline1,
               ),
-              padding: EdgeInsets.all(30.0),
-              shape: CircleBorder(),
-            ),
-          ]
-      ),
-    );
+              SizedBox(height: 30,),
+              RawMaterialButton(
+                onPressed: () {
+                  Navigator.pushNamed(
+                      context,
+                      MyRoute.CREATE_PROFILE.route
+                  );
+                },
+                elevation: 2.0,
+                fillColor: Theme.of(context).accentColor,
+                textStyle: Theme.of(context).textTheme.headline1,
+                child: Icon(
+                  Icons.attach_money,
+                  size: 100.0,
+                  color: Theme.of(context).primaryColor,
+                ),
+                padding: EdgeInsets.all(30.0),
+                shape: CircleBorder(),
+              ),
+            ]
+        ),
+      )
+      : Container(); // wait for profile loading
   }
 }
 
